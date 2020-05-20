@@ -11,9 +11,13 @@ import com.example.gallerymanager.R;
 import com.example.gallerymanager.databinding.ActivityPreviewBinding;
 import com.example.gallerymanager.utils.StatusBar;
 
+import java.util.ArrayList;
+
 public class PreviewActivity extends AppCompatActivity {
 
-    public static final String IMAGE_PATH="imagePath";
+    public static final String IMAGES="images";
+
+    public static final String INDEX="index";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +25,8 @@ public class PreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityPreviewBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_preview);
-        String imagePath=getIntent().getStringExtra(IMAGE_PATH);
-        binding.setImagePath(imagePath);
+        ArrayList<String> images=getIntent().getStringArrayListExtra(IMAGES);
+        int index=getIntent().getIntExtra(INDEX,0);
+        binding.setImagePath(images.get(index));
     }
 }

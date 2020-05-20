@@ -47,11 +47,12 @@ public class HomeActivity extends AppCompatActivity {
         HomeAdapter adapter = new HomeAdapter(new ArrayList<>());
         adapter.setClickListener(new HomeAdapter.onItemClickListener() {
             @Override
-            public void onClick(View v,String imagePath) {
+            public void onClick(View v,ArrayList<String> images,int index) {
                 ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this,
                         v,getString(R.string.image));
                 Intent intent = new Intent(HomeActivity.this, PreviewActivity.class);
-                intent.putExtra(PreviewActivity.IMAGE_PATH,imagePath);
+                intent.putStringArrayListExtra(PreviewActivity.IMAGES,images);
+                intent.putExtra(PreviewActivity.INDEX,index);
                 ActivityCompat.startActivity(HomeActivity.this,intent,optionsCompat.toBundle());
             }
         });

@@ -39,7 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClickListener.onClick(v,imageList.get(position));
+                mClickListener.onClick(v,imageList,position);
             }
         });
     }
@@ -67,6 +67,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public interface onItemClickListener{
-        public void onClick(View v,String imagePath);
+        public void onClick(View v,ArrayList<String> images,int index);
     }
 }
