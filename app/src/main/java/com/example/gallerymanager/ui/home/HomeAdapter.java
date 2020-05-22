@@ -35,7 +35,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull HomeAdapter.ViewHolder holder, int position) {
-        holder.bindData(imageList.get(position));
+        holder.bindData(imageList.get(position),position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +61,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             this.binding=binding;
         }
 
-        public void bindData(String imagePath) {
+        public void bindData(String imagePath, int position) {
             binding.setImagePath(imagePath);
+            binding.homeItemImage.setTransitionName("image"+position);
         }
     }
 

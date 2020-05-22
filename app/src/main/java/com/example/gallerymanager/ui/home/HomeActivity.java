@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, PreviewActivity.class);
                 intent.putStringArrayListExtra(PreviewActivity.IMAGES,images);
                 intent.putExtra(PreviewActivity.INDEX,index);
+//                HomeActivity.this.startActivity(intent);
                 ActivityCompat.startActivity(HomeActivity.this,intent,optionsCompat.toBundle());
             }
         });
