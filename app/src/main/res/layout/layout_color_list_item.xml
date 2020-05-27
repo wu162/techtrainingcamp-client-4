@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/color_item_selector">
+
+<!--    <View-->
+<!--        android:id="@+id/edit_color_list_item"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:background="@drawable/color_item"/>-->
+
+    <com.example.gallerymanager.view.ColorItemView
+        android:id="@+id/edit_color_list_item"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+</LinearLayout>

@@ -3,6 +3,7 @@
     package="com.example.gallerymanager">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.preview.PreviewActivity"/>
+        <activity android:name=".ui.edit.EditActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.preview.PreviewActivity" />
         <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

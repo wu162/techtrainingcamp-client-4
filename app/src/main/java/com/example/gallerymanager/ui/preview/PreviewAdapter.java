@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.gallerymanager.R;
 import com.example.gallerymanager.view.MyImageView;
 
@@ -57,10 +59,13 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         public void bindData(View itemView, String imagePath, int position) {
             MyImageView image = itemView.findViewById(R.id.preview_image);
             image.bindData(imagePath);
+            RequestOptions options=new RequestOptions()
+                    .dontAnimate();
             Glide.with(mContext)
                     .load(imagePath)
+
                     .into(image);
-            image.setTransitionName("image"+position);
+            itemView.setTag(position);
         }
     }
 }

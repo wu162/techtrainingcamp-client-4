@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gallerymanager.databinding.LayoutItemImageBinding;
@@ -36,6 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeAdapter.ViewHolder holder, int position) {
         holder.bindData(imageList.get(position),position);
+        ViewCompat.setTransitionName(holder.itemView,"image"+position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         public void bindData(String imagePath, int position) {
             binding.setImagePath(imagePath);
-            binding.homeItemImage.setTransitionName("image"+position);
+//            binding.homeItemImage.setTransitionName("image"+position);
         }
     }
 

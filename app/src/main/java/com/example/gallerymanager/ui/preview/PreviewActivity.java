@@ -1,21 +1,21 @@
 package com.example.gallerymanager.ui.preview;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.transition.TransitionInflater;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.ImageView;
 
 import com.example.gallerymanager.R;
 import com.example.gallerymanager.databinding.ActivityPreviewBinding;
+import com.example.gallerymanager.model.Images;
+import com.example.gallerymanager.ui.edit.EditActivity;
 import com.example.gallerymanager.utils.StatusBar;
 import com.example.gallerymanager.view.MyImageView;
 
@@ -24,32 +24,31 @@ import java.util.ArrayList;
 public class PreviewActivity extends AppCompatActivity {
 
     public static final String IMAGES="images";
-
-    public static final String INDEX="index";
+    private ActivityPreviewBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StatusBar.hideStatusBar(this);
         super.onCreate(savedInstanceState);
 
-        ActivityPreviewBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_preview);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_preview);
         ArrayList<String> images=getIntent().getStringArrayListExtra(IMAGES);
-        int index=getIntent().getIntExtra(INDEX,0);
-
-        PreviewViewModel mViewModel= new ViewModelProvider(this,new PreviewViewModelFactory(index)).get(PreviewViewModel.class);
 
         PreviewAdapter adapter = new PreviewAdapter(images);
         binding.viewPagerImage.setAdapter(adapter);
-        binding.viewPagerImage.setCurrentItem(index,false);
-        binding.viewPagerImage.setOffscreenPageLimit(2);
+        binding.viewPagerImage.setCurrentItem(Images.getCurrentPos(),false);
+        binding.viewPagerImage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                MyImageView image = binding.viewPagerImage.findViewWithTag(Images.getCurrentPos()).findViewById(R.id.preview_image);
+                image.reset();
+                Images.setCurrentPos(position);
+            }
+        });
         binding.viewPagerImage.setPageTransformer(new ViewPager2.PageTransformer() {
             @Override
             public void transformPage(@NonNull View view, float position) {
-//                Log.d("PreviewActivity1",String.valueOf(position));
-                if(Math.abs(position)<0.0001f){
-                    MyImageView image = view.findViewById(R.id.preview_image);
-                    image.reset();
-                }
 //                int pageWidth = view.getWidth();
 //
 //                if (position < -1) { // [-Infinity,-1)
@@ -82,6 +81,23 @@ public class PreviewActivity extends AppCompatActivity {
 //                }
             }
         });
-//        binding.setImagePath(images.get(index));
+
+        ViewCompat.setTransitionName(binding.viewPagerImage,"image"+Images.getCurrentPos());
+
+        binding.previewEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewActivity.this, EditActivity.class);
+                intent.putExtra("imageUrl",images.get(Images.getCurrentPos()));
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+//        supportFinishAfterTransition();
+        super.onBackPressed();
     }
 }
