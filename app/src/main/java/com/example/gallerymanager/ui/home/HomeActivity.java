@@ -53,6 +53,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 RecyclerView.ViewHolder viewholder = recyclerView.findViewHolderForAdapterPosition(Images.getCurrentPos());
+                if(viewholder==null){
+                    return;
+                }
                 sharedElements.put(names.get(0), viewholder.itemView.findViewById(R.id.home_item_image));
             }
         });
@@ -71,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, PreviewActivity.class);
                 intent.putStringArrayListExtra(PreviewActivity.IMAGES, images);
 //                HomeActivity.this.startActivity(intent);
-                ActivityCompat.startActivityForResult(HomeActivity.this, intent, 2, optionsCompat.toBundle());
+                ActivityCompat.startActivity(HomeActivity.this, intent, optionsCompat.toBundle());
             }
         });
         recyclerView.setAdapter(adapter);
@@ -126,4 +129,7 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+
 }

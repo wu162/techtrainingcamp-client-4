@@ -1,15 +1,15 @@
 package com.example.gallerymanager.ui.edit;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
@@ -19,8 +19,9 @@ import com.example.gallerymanager.R;
 import com.example.gallerymanager.databinding.ActivityEditBinding;
 import com.example.gallerymanager.utils.IOUtils;
 import com.example.gallerymanager.utils.StatusBar;
-import com.example.gallerymanager.view.EditableView;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,12 +37,15 @@ public class EditActivity extends AppCompatActivity {
             "#0000ff",
             "#ffffff"
     ));
+    private String tmpfilePath;
+    private String cropfilePath;
+    private ActivityEditBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StatusBar.hideStatusBar(this);
         super.onCreate(savedInstanceState);
-        ActivityEditBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_edit);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit);
         String imageUrl=getIntent().getStringExtra("imageUrl");
         binding.setImageUrl(imageUrl);
         binding.editImage.bindData(imageUrl);
@@ -89,12 +93,10 @@ public class EditActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -114,5 +116,39 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        binding.editButtonCrop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tmpfilePath = IOUtils.getFileFromBitmap(binding.editImage.getBitmap());
+                cropfilePath = tmpfilePath.substring(0, tmpfilePath.length()-4)+"_crop"+".jpg";
+
+                UCrop.Options options = new UCrop.Options();
+                options.setFreeStyleCropEnabled(true);
+                options.setHideBottomControls(true);
+                options.setToolbarTitle("裁剪图片");
+
+                UCrop.of(Uri.fromFile(new File(tmpfilePath)),Uri.fromFile(new File(cropfilePath)))
+                        .withOptions(options)
+                        .start(EditActivity.this);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == UCrop.REQUEST_CROP) {
+            if(resultCode == RESULT_OK){
+                binding.editImage.bindData(cropfilePath);
+                binding.editImage.clearPath();
+            }
+            new File(tmpfilePath).delete();
+            new File(cropfilePath).delete();
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+//            final Throwable cropError = UCrop.getError(data);
+            Toast.makeText(this,"发生错误",Toast.LENGTH_SHORT).show();
+            new File(tmpfilePath).delete();
+            new File(cropfilePath).delete();
+        }
     }
 }

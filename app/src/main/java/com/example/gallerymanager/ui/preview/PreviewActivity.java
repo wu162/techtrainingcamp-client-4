@@ -41,8 +41,11 @@ public class PreviewActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                MyImageView image = binding.viewPagerImage.findViewWithTag(Images.getCurrentPos()).findViewById(R.id.preview_image);
-                image.reset();
+                View lastView = binding.viewPagerImage.findViewWithTag(Images.getCurrentPos());
+                if (lastView!=null){
+                    MyImageView image = lastView.findViewById(R.id.preview_image);
+                    image.reset();
+                }
                 Images.setCurrentPos(position);
             }
         });

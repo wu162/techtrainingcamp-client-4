@@ -8,7 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gallerymanager.databinding.LayoutItemImageBinding;
+
+import com.example.gallerymanager.databinding.LayoutHomeItemBinding;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public HomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutItemImageBinding binding = LayoutItemImageBinding.inflate(LayoutInflater.from(parent.getContext()));
+        LayoutHomeItemBinding binding = LayoutHomeItemBinding.inflate(LayoutInflater.from(parent.getContext()));
         return new ViewHolder(binding.getRoot(),binding);
     }
 
@@ -56,9 +57,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private LayoutItemImageBinding binding;
+        private LayoutHomeItemBinding binding;
 
-        public ViewHolder(@NonNull View itemView, LayoutItemImageBinding binding) {
+        public ViewHolder(@NonNull View itemView, LayoutHomeItemBinding binding) {
             super(itemView);
             this.binding=binding;
         }

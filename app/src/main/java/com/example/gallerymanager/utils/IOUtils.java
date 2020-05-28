@@ -19,6 +19,8 @@ import com.example.gallerymanager.view.EditableView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class IOUtils {
 
@@ -26,7 +28,7 @@ public class IOUtils {
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, option);
-        option.inSampleSize = Math.max(1, Math.min(option.outWidth / width, option.outHeight / height));
+        option.inSampleSize = Math.max(1, Math.min(option.outWidth /  width, option.outHeight / height));
         option.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(path, option).copy(Bitmap.Config.ARGB_8888,true);
     }
@@ -88,4 +90,32 @@ public class IOUtils {
 
         return bmp;
     }
+
+    @SuppressLint("RestrictedApi")
+    public static String getFileFromBitmap(Bitmap bitmap){
+        String result=null;
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "galleryManager";
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            if (!isSuccess) {
+                throw new Exception();
+            }
+            result=file.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            return result;
+        }
+    }
+
 }

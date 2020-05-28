@@ -135,6 +135,10 @@ public class EditableView extends View {
         return bitmap;
     }
 
+    public void clearPath() {
+        paths.clear();
+    }
+
     //    public void saveToImage() {
 //        this.setDrawingCacheEnabled(true);
 //        this.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);

@@ -1,5 +1,6 @@
 package com.example.gallerymanager.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.gallerymanager.utils.MatrixEvaluator;
 import com.example.gallerymanager.utils.MyGestureDetectorListener;
 import com.example.gallerymanager.utils.MySimpleOnScaleGestureDetector;
 import com.example.gallerymanager.utils.PixUtils;
@@ -196,8 +198,15 @@ public class MyImageView extends AppCompatImageView {
     }
 
     public void reset() {
+        animateTo(new Matrix());
         mOnScaleGestureListener.setScaleMatrix(new Matrix());
         setImageMatrix(mOnScaleGestureListener.getScaleMatrix());
+    }
+
+    private void animateTo(Matrix matrix) {
+        ObjectAnimator animator=ObjectAnimator.ofObject(this,"imageMatrix",new MatrixEvaluator(),mOnScaleGestureListener.getScaleMatrix(),matrix);
+        animator.setDuration(300);
+        animator.start();
     }
 
     public RectF getMatrixRectF()
