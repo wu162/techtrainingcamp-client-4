@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbar_send"
+        android:title="发送文件"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toolbar_receive"
+        android:title="接收文件"
+        android:orderInCategory="2"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toolbar_cancel"
+        android:title="取消"
+        android:orderInCategory="3"
+        android:visible="false"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/toolbar_confirm"
+        android:title="确定"
+        android:orderInCategory="4"
+        android:visible="false"
+        app:showAsAction="always"/>
+
+
+</menu>

@@ -9,6 +9,16 @@
             name="imagePath"
             type="java.lang.String" />
 
+        <variable
+            name="canChoose"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="selected"
+            type="java.lang.Boolean" />
+
+        <import type="android.view.View"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +36,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             android:transitionName="@string/image"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="@{canChoose?View.VISIBLE:View.GONE}"
+            android:src="@{selected?@drawable/choose_selected:@drawable/choose_select}"
+            tools:src="@drawable/choose_selected"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

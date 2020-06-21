@@ -2,4 +2,6 @@
     <string name="app_name">GalleryManager</string>
     <string name="image">image</string>
     <string name="home_title">相册</string>
+    <string name="send_file_title">发送文件</string>
+    <string name="receive_file_title">接收文件</string>
 </resources>

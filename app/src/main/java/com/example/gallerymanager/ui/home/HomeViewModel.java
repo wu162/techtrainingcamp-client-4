@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class HomeViewModel extends ViewModel {
     public MutableLiveData<ArrayList<String>> imagePaths=new MutableLiveData<>();
+    public MutableLiveData<Boolean> isChoosing=new MutableLiveData<>(false);
 
     public HomeViewModel() {
     }

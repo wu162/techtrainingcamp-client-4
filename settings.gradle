@@ -1,2 +1,6 @@
+include ':sample-client'
+include ':sample-server'
+include ':sample-foo'
+include ':lib-clink'
 rootProject.name='GalleryManager'
 include ':app'

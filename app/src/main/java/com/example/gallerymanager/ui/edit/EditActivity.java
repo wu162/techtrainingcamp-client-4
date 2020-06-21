@@ -1,5 +1,6 @@
 package com.example.gallerymanager.ui.edit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -9,12 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.gallerymanager.R;
 import com.example.gallerymanager.databinding.ActivityEditBinding;
 import com.example.gallerymanager.utils.IOUtils;
@@ -49,6 +55,10 @@ public class EditActivity extends AppCompatActivity {
         String imageUrl=getIntent().getStringExtra("imageUrl");
         binding.setImageUrl(imageUrl);
         binding.editImage.bindData(imageUrl);
+        Glide.with(this)
+                .load(imageUrl)
+                .apply(new RequestOptions().dontAnimate())
+                .into(binding.editImage);
 
         binding.editImage.setColor(colorList.get(0));
         binding.editImage.setWidth(binding.widthBar.getProgress());
@@ -119,7 +129,7 @@ public class EditActivity extends AppCompatActivity {
         binding.editButtonCrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tmpfilePath = IOUtils.getFileFromBitmap(binding.editImage.getBitmap());
+                tmpfilePath = IOUtils.getFileFromview(binding.editImage);
                 cropfilePath = tmpfilePath.substring(0, tmpfilePath.length()-4)+"_crop"+".jpg";
 
                 UCrop.Options options = new UCrop.Options();
@@ -133,20 +143,41 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+//        binding.editButtonRotate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                binding.editImage.animate().rotation(90.0f);
+//            }
+//        });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UCrop.REQUEST_CROP) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 binding.editImage.bindData(cropfilePath);
                 binding.editImage.clearPath();
+//                Glide.with(this)
+//                        .load(cropfilePath)
+//                        .into(binding.editImage);
+                Glide.with(this)
+                        .load(cropfilePath)
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                binding.editImage.setImageDrawable(resource);
+                                new File(tmpfilePath).delete();
+                                new File(cropfilePath).delete();
+                            }
+                        });
             }
-            new File(tmpfilePath).delete();
-            new File(cropfilePath).delete();
+//            new File(tmpfilePath).delete();
+//            new File(cropfilePath).delete();
         } else if (resultCode == UCrop.RESULT_ERROR) {
 //            final Throwable cropError = UCrop.getError(data);
-            Toast.makeText(this,"发生错误",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "发生错误", Toast.LENGTH_SHORT).show();
             new File(tmpfilePath).delete();
             new File(cropfilePath).delete();
         }

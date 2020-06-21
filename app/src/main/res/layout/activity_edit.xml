@@ -31,62 +31,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/edit_buttons"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="#00000000"
-            android:visibility="@{hideInteraction?View.GONE:View.VISIBLE}">
+            android:layout_height="wrap_content"
+            android:background="#44000000">
 
-            <ImageView
-                android:id="@+id/edit_button_color"
-                android:layout_width="30dp"
+            <LinearLayout
+                android:id="@+id/edit_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="@{hideInteraction?View.GONE:View.VISIBLE}">
+
+                <ImageView
+                    android:id="@+id/edit_button_color"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@{buttonSelected==1?@drawable/color_selected:@drawable/color}"
+                    tools:src="@drawable/color" />
+
+                <ImageView
+                    android:id="@+id/edit_button_width"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="18dp"
+                    android:src="@{buttonSelected==2?@drawable/width_selected:@drawable/width}"
+                    tools:src="@drawable/width" />
+
+                <ImageView
+                    android:id="@+id/edit_button_crop"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="18dp"
+                    android:src="@drawable/crop"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_save"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:src="@{buttonSelected==1?@drawable/color_selected:@drawable/color}"
-                tools:src="@drawable/color" />
+                android:text="完成"
+                android:textColor="@color/white"
+                android:background="@drawable/edit_save_button"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"/>
 
-            <ImageView
-                android:id="@+id/edit_button_width"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="18dp"
-                android:src="@{buttonSelected==2?@drawable/width_selected:@drawable/width}"
-                tools:src="@drawable/width" />
-
-            <ImageView
-                android:id="@+id/edit_button_crop"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="18dp"
-                android:src="@drawable/crop"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/edit_save"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:text="完成"
-            android:textColor="@color/white"
-            android:background="@drawable/edit_save_button"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="12dp"
-            android:layout_marginRight="12dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/color_list"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_above="@id/edit_buttons"
-            android:background="#00000000"
-            android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==1)?View.VISIBLE:View.GONE}"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/color_list"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_above="@id/edit_buttons"
+                android:background="#00000000"
+                android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==1)?View.VISIBLE:View.GONE}"/>
 
             <SeekBar
                 android:id="@+id/width_bar"
@@ -113,6 +117,92 @@
                 android:layout_marginLeft="6dp"
                 android:layout_above="@id/edit_buttons"
                 android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==2)?View.VISIBLE:View.GONE}"/>
+
+
+
+        </RelativeLayout>
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/edit_buttons"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:visibility="@{hideInteraction?View.GONE:View.VISIBLE}">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/edit_button_color"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:src="@{buttonSelected==1?@drawable/color_selected:@drawable/color}"-->
+<!--                tools:src="@drawable/color" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/edit_button_width"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginLeft="18dp"-->
+<!--                android:src="@{buttonSelected==2?@drawable/width_selected:@drawable/width}"-->
+<!--                tools:src="@drawable/width" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/edit_button_crop"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginLeft="18dp"-->
+<!--                android:src="@drawable/crop"/>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/edit_save"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:text="完成"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:background="@drawable/edit_save_button"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            android:layout_marginRight="12dp"/>-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/color_list"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:layout_marginBottom="6dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_above="@id/edit_buttons"-->
+<!--            android:background="#00000000"-->
+<!--            android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==1)?View.VISIBLE:View.GONE}"/>-->
+
+<!--            <SeekBar-->
+<!--                android:id="@+id/width_bar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:max="25"-->
+<!--                android:min="2"-->
+<!--                android:progress="5"-->
+<!--                android:layout_marginBottom="6dp"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_above="@id/edit_buttons"-->
+<!--                android:layout_toRightOf="@id/width_bar_label"-->
+<!--                android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==2)?View.VISIBLE:View.GONE}"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/width_bar_label"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="笔触粗细"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:layout_marginLeft="6dp"-->
+<!--                android:layout_above="@id/edit_buttons"-->
+<!--                android:visibility="@{(!hideInteraction &amp;&amp; buttonSelected==2)?View.VISIBLE:View.GONE}"/>-->
 
 
     </RelativeLayout>

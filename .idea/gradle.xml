@@ -11,6 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib-clink" />
+            <option value="$PROJECT_DIR$/sample-client" />
+            <option value="$PROJECT_DIR$/sample-foo" />
+            <option value="$PROJECT_DIR$/sample-server" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

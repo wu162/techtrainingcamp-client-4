@@ -36,8 +36,12 @@ public class IOUtils {
 
     @SuppressLint("RestrictedApi")
     public static LiveData<String> saveToImage(Context context, EditableView view) {
+        //TODO 按照原图长宽保存
         final MutableLiveData<String> result=new MutableLiveData<>();
-        Bitmap bitmap=view.getBitmap();
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        view.setDrawingCacheBackgroundColor(Color.WHITE);
+        Bitmap bitmap=loadBitmapFromView(view);
 
         ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
             @Override
@@ -70,7 +74,7 @@ public class IOUtils {
                 }
             }
         });
-
+        view.destroyDrawingCache();
         result.setValue("success");
         return result;
     }
@@ -92,8 +96,14 @@ public class IOUtils {
     }
 
     @SuppressLint("RestrictedApi")
-    public static String getFileFromBitmap(Bitmap bitmap){
+    public static String getFileFromview(EditableView view){
         String result=null;
+
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        view.setDrawingCacheBackgroundColor(Color.WHITE);
+        Bitmap bitmap=loadBitmapFromView(view);
+
         String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "galleryManager";
         File appDir = new File(storePath);
         if (!appDir.exists()) {
@@ -114,8 +124,19 @@ public class IOUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
+            view.destroyDrawingCache();
             return result;
         }
     }
 
+    public static File getFileDir() {
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "galleryManager";
+        File file = new File(storePath);
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                throw new RuntimeException("Create path error");
+            }
+        }
+        return file;
+    }
 }
